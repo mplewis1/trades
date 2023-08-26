@@ -1,8 +1,12 @@
 const express = require('express');
-app.use(express.json());
 
 const app = express();
 const PORT = process.env.PORT || 3001;
+
+app.use(express.json());
+
+const teamRoutes = require('./routes/teamRoutes');
+const playerRoutes = require('./routes/playerRoutes');
 
 const mongoose = require('mongoose');
 
@@ -19,6 +23,9 @@ mongoose.connection.on('connected', () => {
 mongoose.connection.on('error', (err) => {
   console.log('Failed to connect to MongoDB', err);
 });
+
+app.use('/teams', teamRoutes);
+app.use('/players', playerRoutes);
 
 app.get('/', (req, res) => {
     res.send('Hockey League Trade Simulator API');
