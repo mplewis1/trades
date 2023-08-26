@@ -4,6 +4,22 @@ app.use(express.json());
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+const mongoose = require('mongoose');
+
+// Connect to MongoDB
+mongoose.connect('mongodb://localhost:27017/tradesim', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
+
+mongoose.connection.on('connected', () => {
+  console.log('Connected to MongoDB');
+});
+
+mongoose.connection.on('error', (err) => {
+  console.log('Failed to connect to MongoDB', err);
+});
+
 app.get('/', (req, res) => {
     res.send('Hockey League Trade Simulator API');
 });
