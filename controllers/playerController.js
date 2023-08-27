@@ -12,6 +12,8 @@ exports.getAllPlayers = async (req, res) => {
 
 // Create a new player
 exports.createPlayer = async (req, res) => {
+    console.log("Request Body:", req.body);
+
     const player = new Player(req.body);
     try {
         const savedPlayer = await player.save();

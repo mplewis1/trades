@@ -1,14 +1,10 @@
 const express = require('express');
+const mongoose = require('mongoose');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 
 app.use(express.json());
-
-const teamRoutes = require('./routes/teamRoutes');
-const playerRoutes = require('./routes/playerRoutes');
-
-const mongoose = require('mongoose');
 
 // Connect to MongoDB
 mongoose.connect('mongodb://localhost:27017/tradesim', {
@@ -24,30 +20,20 @@ mongoose.connection.on('error', (err) => {
   console.log('Failed to connect to MongoDB', err);
 });
 
+// Import routes
+const teamRoutes = require('./routes/teamRoutes');
+const playerRoutes = require('./routes/playerRoutes');
+
+// Use routes
 app.use('/teams', teamRoutes);
 app.use('/players', playerRoutes);
 
+// Define main API endpoint
 app.get('/', (req, res) => {
     res.send('Hockey League Trade Simulator API');
 });
 
+// Start the server
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
-});
-
-app.get('/teams', (req, res) => {
-    res.json({ message: "Retrieve list of teams" });
-});
-
-app.get('/players', (req, res) => {
-    res.json({ message: "Retrieve list of players" });
-});
-
-app.post('/trade', (req, res) => {
-    const trade = req.body;
-    res.json({ message: "Trade simulation submitted" });
-});
-
-app.get('/trade/:tradeId', (req, res) => {
-    res.json({ message: `Retrieve trade simulation with ID: ${req.params.tradeId}` });
 });
