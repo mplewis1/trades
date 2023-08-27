@@ -1,14 +1,16 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import Header from './components/Header';
+import Footer from './components/Footer';
+import MainContent from './components/MainContent';
 
 function App() {
   return (
     <div className="App">
-      <h1>Welcome to the Hockey League Trade Simulator</h1>
-      <p>Start simulating trades here!</p>
+      <Header />
+      <MainContent />
+      <Footer />
     </div>
   );
 }
-
 
 export default App;
